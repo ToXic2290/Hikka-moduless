@@ -1,3 +1,5 @@
+# meta developer: @ToXicUse and @Den4ikSuperOstryyPer4ik
+
 import os
 from asyncio import sleep
 
