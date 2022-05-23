@@ -15,7 +15,7 @@ from .. import loader, utils
 class UserMod(loader.Module):
 	"""Управление профилем в Telegram"""
 	strings = {'name': 'User'}
-#meta developers: @Den4ikSuperOstryyPer4ik, @ToXicUse
+	
 	def __init__(self):
 		self.name = self.strings['name']
 		self._me = None
@@ -75,7 +75,7 @@ class UserMod(loader.Module):
 		await message.delete()
 
 	async def setavacmd(self, message):
-		"""—>Загрузить автарку"""
+		"""—> Загрузить автарку"""
 		reply = await check_mediaa(message)
 		if not reply:
 			try:
@@ -130,7 +130,7 @@ class UserMod(loader.Module):
 			os.remove(photo)
 
 	async def delavacmd(self, message):
-		"""—>Удаление аватарки"""
+		"""—> Удаление аватарки"""
 		ava = await message.client.get_profile_photos('me', limit=1)
 		if len(ava) > 0:
 			await message.edit("Удаление аватарки...")
@@ -141,7 +141,7 @@ class UserMod(loader.Module):
 				"У тебя нету аватарки!")
 
 	async def delavascmd(self, message):
-		"""—>Удалить все аватарки"""
+		"""—> Удалить все аватарки"""
 		ava = await message.client.get_profile_photos('me')
 		if len(ava) > 0:
 			await message.edit("Удаление аватарок...")
@@ -153,7 +153,7 @@ class UserMod(loader.Module):
 				"У вас нету аватарок!")
 
 	async def setnamecmd(self, message):
-		"""—>Изменить имя"""
+		"""—> Изменить имя"""
 		args = utils.get_args_raw(message).split('/')
 		if len(args) == 1:
 			firstname = args[0]
@@ -166,7 +166,7 @@ class UserMod(loader.Module):
 		await message.edit('Имя изменено успешно!')
 
 	async def setbiocmd(self, message):
-		"""—>Изменить био(о себе)"""
+		"""—> Изменить био(о себе)"""
 		args = utils.get_args_raw(message)
 		if not args:
 			return await message.edit('Нет аргументов.')
@@ -174,7 +174,7 @@ class UserMod(loader.Module):
 		await message.edit('Био(о себе) изменено успешно!')
 
 	async def setusercmd(self, message):
-		"""—>Изменить свой юзернейм(@)"""
+		"""—> Изменить свой юзернейм(@)"""
 		args = utils.get_args_raw(message)
 		if not args:
 			return await message.edit('Нет аргументов.')
