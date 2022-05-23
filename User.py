@@ -1,5 +1,3 @@
-# meta developer: @ToXicUse
-
 import os
 from asyncio import sleep
 
@@ -13,9 +11,9 @@ from .. import loader, utils
 
 @loader.tds
 class UserMod(loader.Module):
-	"""User Tools by @ToXicUse"""
+	"""Управление профилем в Telegram"""
 	strings = {'name': 'User'}
-
+#meta developers: @Den4ikSuperOstryyPer4ik, @ToXicUse
 	def __init__(self):
 		self.name = self.strings['name']
 		self._me = None
@@ -30,7 +28,7 @@ class UserMod(loader.Module):
 
 
 	async def avacmd(self, message):
-		"""Получить фото профиля \nИспользование: .ava @ или реплай"""
+		"""—>Получить все аватарки пользоаателя"""
 		id = utils.get_args_raw(message)
 		user = await message.get_reply_message()
 		chat = message.input_chat
@@ -53,18 +51,18 @@ class UserMod(loader.Module):
 							message.input_chat)
 					await self.client.send_file(message.chat_id, photo)
 				except:
-					await message.edit("<code>This user has no photos</code>")
+					await message.edit("<code>У этого пользователя нету аватарок</code>")
 					return
 		else:
 			try:
 				id = int(id)
 				if id <= 0:
 					await message.edit(
-						"<code>ID number you entered is invalid</code>")
+						"<code>ID номер неправильный</code>")
 					return
 			except:
 				await message.edit(
-					"<code>ID number you entered is invalid</code>")
+					"<code>ID номер неправильный</code>")
 				return
 			if int(id) <= (len(photos)):
 				send_photos = await self.client.download_media(photos[id - 1])
@@ -75,7 +73,7 @@ class UserMod(loader.Module):
 		await message.delete()
 
 	async def setavacmd(self, message):
-		"""Установить фото профиля \nИспользование .ava реплай на фото"""
+		"""—>Загрузить автарку"""
 		reply = await check_mediaa(message)
 		if not reply:
 			try:
@@ -83,11 +81,11 @@ class UserMod(loader.Module):
 				if not reply:
 					return await message.edit(
 						"No reply on gif / animated sticker / video message .")
-				await message.edit("Downloading...")
+				await message.edit("Загрузкп...")
 				if reply.video:
 					await message.client.download_media(reply.media,
 					                                    "ava.mp4")
-					await message.edit("Converting...")
+					await message.edit("Конвертация...")
 					os.system(
 						"ffmpeg -i ava.mp4 -c copy -an gifavaa.mp4 -y")
 					os.system(
@@ -98,12 +96,12 @@ class UserMod(loader.Module):
 					await message.edit("Converting...")
 					os.system(
 						"lottie_convert.py tgs.tgs tgs.gif; mv tgs.gif gifava.mp4")
-				await message.edit("Installing ava...")
+				await message.edit("Загрузка аватарки...")
 				await message.client(
 					functions.photos.UploadProfilePhotoRequest(
 						video=await message.client.upload_file("gifava.mp4"),
 						video_start_ts=0.0))
-				await message.edit("Ava installed.")
+				await message.edit("Аватарка загружена.")
 				os.system("rm -rf ava.mp4 gifava.mp4 gifavaa.mp4 tgs*")
 			except:
 				await message.edit(
@@ -119,9 +117,9 @@ class UserMod(loader.Module):
 			try:
 				reply.media.photo
 			except:
-				await message.edit("Give me a photo pls")
+				await message.edit("Дайте фоторафию пожалуйста.")
 				return
-			await message.edit("Downloading...")
+			await message.edit("Загрузка...")
 			photo = await message.client.download_media(message=reply.photo)
 			up = await message.client.upload_file(photo)
 			await message.edit("Uploading avatar...")
@@ -130,30 +128,30 @@ class UserMod(loader.Module):
 			os.remove(photo)
 
 	async def delavacmd(self, message):
-		"""Удалить нынешнее фото профиля \nИспользование .delava """
+		"""—>Удаление аватарки"""
 		ava = await message.client.get_profile_photos('me', limit=1)
 		if len(ava) > 0:
-			await message.edit("Deleting avatar...")
+			await message.edit("Удаление аватарки...")
 			await message.client(functions.photos.DeletePhotosRequest(ava))
-			await message.edit("Avatar deleted!")
+			await message.edit("Автарка удалена!")
 		else:
 			await message.edit(
-				"You doesn't have avatar!")
+				"У тебя нету аватарки!")
 
 	async def delavascmd(self, message):
-		"""Удалить все фото профиля \nИспользование .delavas"""
+		"""—>Удалить все аватарки"""
 		ava = await message.client.get_profile_photos('me')
 		if len(ava) > 0:
-			await message.edit("Deleting avatars...")
+			await message.edit("Удаление аватарок...")
 			await message.client(functions.photos.DeletePhotosRequest(
 				await message.client.get_profile_photos('me')))
-			await message.edit("All avatars deleted!")
+			await message.edit("Все аватарки удалены!")
 		else:
 			await message.edit(
-				"You don't have avatars!")
+				"У вас нету аватарок!")
 
 	async def setnamecmd(self, message):
-		"""Установить имя \nИспользование .setname имя"""
+		"""—>Изменить имя"""
 		args = utils.get_args_raw(message).split('/')
 		if len(args) == 1:
 			firstname = args[0]
@@ -163,26 +161,26 @@ class UserMod(loader.Module):
 			lastname = args[1]
 		await message.client(
 			UpdateProfileRequest(first_name=firstname, last_name=lastname))
-		await message.edit('Name changed successfully!')
+		await message.edit('Имя изменено успешно!')
 
 	async def setbiocmd(self, message):
-		"""Установить био профиля \nИспользование .setbio био"""
+		"""—>Изменить био(о себе)"""
 		args = utils.get_args_raw(message)
 		if not args:
-			return await message.edit('No arguments.')
+			return await message.edit('Нет аргументов.')
 		await message.client(UpdateProfileRequest(about=args))
-		await message.edit('Bio changed successfully!')
+		await message.edit('Био(о себе) изменено успешно!')
 
 	async def setusercmd(self, message):
-		"""Установить user \nИспользование .setuser user"""
+		"""—>Изменить свой юзернейм(@)"""
 		args = utils.get_args_raw(message)
 		if not args:
-			return await message.edit('No arguments.')
+			return await message.edit('Нет аргументов.')
 		try:
 			await message.client(UpdateUsernameRequest(args))
-			await message.edit('Username changed successfully!')
+			await message.edit('Юзернейм изменен успешно!')
 		except UsernameOccupiedError:
-			await message.edit('This username is already occupied!')
+			await message.edit('Юзернейм уже занят Попробуйте другой!')
 
 
 async def check_mediaa(message):
