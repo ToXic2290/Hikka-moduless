@@ -3,7 +3,7 @@
 from .. import loader
 from asyncio import sleep 
 
-class LikeAndTrollMod(loader.Module):
+class LikeAndTrollmod(loader.Module):
 	"""Я покажу тебе, какой ты прекрасный человек
 	(ну или плохой, пхпх)  :)"""
 	strings = {"name": "Compliments and Toxicity"}
