@@ -4,6 +4,7 @@ import logging
 import datetime
 import time
 import asyncio
+import telethon
 
 logger = logging.getLogger(__name__)
 
