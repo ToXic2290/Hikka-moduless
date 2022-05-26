@@ -1,6 +1,7 @@
 # scope: inline_content
 # requires: requests bs4 spotipy
-# meta developer: @morisummermods
+# meta developer: @ToXicUse, @Den4ikSuperOstryyPer4ik
+
 from bs4 import BeautifulSoup
 import spotipy
 import requests
@@ -83,7 +84,7 @@ def add_protocol(x):
     return f"https:{x}" if x.startswith("//") else x
 
 @loader.tds
-class LyricsMod(loader.Module):
+class MusicMod(loader.Module):
     """Музыка и текста песен"""
 
     strings = {
