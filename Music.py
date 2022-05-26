@@ -84,7 +84,7 @@ def add_protocol(x):
     return f"https:{x}" if x.startswith("//") else x
 
 @loader.tds
-class MusicMod(loader.Module):
+class LyricsMod(loader.Module):
     """Музыка и текста песен"""
 
     strings = {
