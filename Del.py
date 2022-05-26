@@ -29,7 +29,17 @@ class DelMod(loader.Module):
     def config_complete(self):
         pass
 
+    async def wait5cmd(self, message):
+        """Эта команда удаляет сообхение черезе 5 секунд"""
+        await utils.answer(message, "Через 5 секунд это сообщение удалится")
 
+        for i in range(4, -1, -1):
+            await asyncio.sleep(1)
+            await utils.answer(message, "Через " + str(i) + " секунд это сообщение удалится")
+
+        await message.delete()
+        
+        
     async def waitcmd(self, message):
         """Эта команда удаляет сообхение через n секунд, \nписать нужно так: .wait <n>, если хотите секунды\nи так .wait <n>m, если хотите ждать в минутах\n(например .wait 5m)"""
         args = utils.get_args(message)
