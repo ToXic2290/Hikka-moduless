@@ -1,3 +1,5 @@
+# meta developer: @ToXicUse, @Den4ikSuperOstryyPer4ik
+
 from .. import loader, utils
 
 import logging
@@ -15,7 +17,7 @@ def register(cb):
 
 @loader.tds
 class DelMod(loader.Module):
-    """Этот модуль поможет вам удалить сообщение через n секунд/минут"""
+    """Менеджер удаления сообщений"""
     strings = {"name": "Del",
                "from_where": "<b>Which messages should be purged?</b>",
                "not_supergroup_bot": "<b>Purges can only take place in supergroups</b>",
