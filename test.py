@@ -1,163 +1,154 @@
-import io
-import time
-
-from PIL import Image
-from telethon.errors import (
-    ChatAdminRequiredError,
-    PhotoCropSizeSmallError,
-    UserAdminInvalidError,
-)
-from telethon.tl.functions.channels import (
-    EditAdminRequest,
-    EditBannedRequest,
-    EditPhotoRequest,
-)
-from telethon.tl.functions.messages import EditChatAdminRequest
-from telethon.tl.types import ChatAdminRights, ChatBannedRights
-
 from .. import loader, utils
 
-# ================== CONSTANS ========================
+import logging
+import datetime
+import time
+import asyncio
 
-UNMUTE_RIGHTS = ChatAdminRights(
-    post_messages=None,
-    add_admins=None,
-    invite_users=None,
-    change_info=None,
-    ban_users=None,
-    delete_messages=None,
-    pin_messages=None,
-    edit_messages=None,
-)
-
-DEMOTE_RIGHTS = ChatBannedRights(
-    until_date=None,
-    view_messages=None,
-    send_messages=None,
-    send_media=False,
-    send_stickers=False,
-    send_gifs=False,
-    send_games=False,
-    send_inline=False,
-    embed_links=False,
-)
-
-BANNED_RIGHTS = ChatBannedRights(
-    until_date=None,
-    view_messages=True,
-    send_messages=True,
-    send_media=True,
-    send_stickers=True,
-    send_gifs=True,
-    send_games=True,
-    send_inline=True,
-    embed_links=True,
-)
-
-UNBAN_RIGHTS = ChatBannedRights(
-    until_date=None,
-    view_messages=None,
-    send_messages=None,
-    send_media=None,
-    send_stickers=None,
-    send_gifs=None,
-    send_games=None,
-    send_inline=None,
-    embed_links=None,
-)
+logger = logging.getLogger(__name__)
 
 
-# =====================================================
-
+def register(cb):
+    cb(WAITMod())
 
 
 @loader.tds
-class AdminToolsMod(loader.Module):
-    """Admin Tools"""
+class DelMod(loader.Module):
+    """Этот модуль поможет вам удалить сообщение через n секунд/минут"""
+    strings = {"name": "Del",
+               "from_where": "<b>Which messages should be purged?</b>",
+               "not_supergroup_bot": "<b>Purges can only take place in supergroups</b>",
+               "delete_what": "<b>What message should be deleted?</b>",}
 
-    strings = {
-        "name": "Admin Tools",
-        "not_pic": "<b>This isn`t an pic/sticker.</b>",
-        "wait": "<b>Waiting...</b>",
-        "pic_so_small": "<b>The image is too small, try another one.</b>",
-        "pic_changed": "<b>Chat pic changed.</b>",
-        "promote_none": "<b>No one to promote.</b>",
-        "who": "<b>Who is it?</b>",
-        "not_admin": "<b>I`m not an admin here.</b>",
-        "promoted": "<b>{} promoted to admin rights.\nRank: {}</b>",
-        "wtf_is_it": "<b>What is it?</b>",
-        "this_isn`t_a_chat": "<b>This isn`t a chat!</b>",
-        "demote_none": "<b>No one to demote.</b>",
-        "demoted": "<b>{} demoted to admin rights.</b>",
-        "pinning": "<b>Pin...</b>",
-        "pin_none": "<b>Reply to the message to pin it.</b>",
-        "unpinning": "<b>Unpin...</b>",
-        "unpin_none": "<b>Nothing to unpin.</b>",
-        "no_rights": "<b>I don`t have rights.</b>",
-        "pinned": "<b>Pinned successfully!</b>",
-        "unpinned": "<b>Unpinned successfully!</b>",
-        "can`t_kick": "<b>Can`t kick.</b>",
-        "kicking": "<b>Kick...</b>",
-        "kick_none": "<b>No one to kick.</b>",
-        "kicked": "<b>{} kicked from chat.</b>",
-        "kicked_for_reason": "<b>{} kicked from chat.\nReason: {}.</b>",
-        "banning": "<b>Ban...</b>",
-        "banned": "<b>{} banned in chat.</b>",
-        "banned_for_reason": "<b>{} banned in chat.\nReason: {}</b>",
-        "ban_none": "<b>No one to ban.</b>",
-        "unban_none": "<b>No one to unban.</b>",
-        "unbanned": "<b>{} unbanned in chat.</b>",
-        "mute_none": "<b>No one to mute.</b>",
-        "muted": "<b>{} now muted for </b>",
-        "no_args": "<b>Invalid arguments specified.</b>",
-        "unmute_none": "<b>No one to unmute.</b>",
-        "unmuted": "<b>{} now unmuted.</b>",
-        "no_reply": "<b>No reply.</b>",
-        "del_u_search": "<b>Search for deleted accounts...</b>",
-        "del_u_kicking": "<b>Kick deleted accounts...\nOh~, I can do it?!</b>",
-    }
-    
-    
-    
-     async def unmediacmd(self, message):
-        """Command .demote for demote user to admin rights.\nUse: .demote <@ or reply>."""
-        if message.is_private:
-            return await utils.answer(
-                message, self.strings("this_isn`t_a_chat", message)
-            )
-        try:
-            reply = await message.get_reply_message()
+    def __init__(self):
+        self.name = self.strings["name"]
 
-            chat = await message.get_chat()
-            if not chat.admin_rights and not chat.creator:
-                return await utils.answer(message, self.strings("not_admin", message))
+    def config_complete(self):
+        pass
 
-            if reply:
-                user = await message.client.get_entity(reply.sender_id)
-            else:
-                args = utils.get_args_raw(message)
-                if not args:
-                    return await utils.answer(
-                        message, self.strings("demote_none", message)
-                    )
-                user = await message.client.get_entity(
-                    args if not args.isnumeric() else int(args)
-                )
 
+    async def waitcmd(self, message):
+        """Эта команда удаляет сообхение через n секунд, \nписать нужно так: .wait <n>, если хотите секунды\nи так .wait <n>m, если хотите ждать в минутах\n(например .wait 5m)"""
+        args = utils.get_args(message)
+        if not args or len(args) > 1:
+            await utils.answer(message, "Вы не указали число секунд или указали несколько параметров")
+        else:
             try:
-                if message.is_channel:
-                    await message.client(
-                        EditAdminRequest(message.chat_id, user.id, DEMOTE_RIGHTS, "")
-                    )
-                else:
-                    await message.client(
-                        EditChatAdminRequest(message.chat_id, user.id, False)
-                    )
-            except ChatAdminRequiredError:
-                return await utils.answer(message, self.strings("no_rights", message))
-            else:
-                return await utils.answer(
-                    message, self.strings("demoted", message).format(user.first_name)
-                )
-        except ValueError:
-            return await utils.answer(message, self.strings("no_args"))
+                g = -1
+                h = ""
+                try:
+                    g = int(args[0][:len(args[0])])
+                except:
+                    try:
+                        g = int(args[0][:len(args[0]) - 1])
+                        h = args[0][len(args[0]) - 1]
+                    except:
+                        await utils.answer(message, "Вы указали не число!")
+                if g > 0:
+                    if h == 's' or h == '':
+                        x = g
+                        lst = "Через " + str(x) + " секунд это сообщение удалится"
+                        await utils.answer(message, lst)
+
+                        dd = time.time()
+
+                        while time.time() - dd < x:
+                            now = "Через " + str(x - round(time.time() - dd)) + " секунд это сообщение удалится"
+                            if now != lst:
+                                await utils.answer(message, now)
+                            lst = now
+                        await message.delete()
+                    elif h == 'm':
+                        x = g
+                        lst = "Через " + str(x) + " минут это сообщение удалится"
+                        await utils.answer(message, lst)
+
+                        dd = time.time()
+
+                        ff = x * 60
+
+                        llst = x
+                        while time.time() - dd < ff:
+                            oo = round((ff - round(time.time() - dd)) / 60)
+                            nw = oo
+                            if nw == llst:
+                                await asyncio.sleep(0.1)
+                                continue
+                            now = "Через " + str(nw) + " минут это сообщение удалится"
+                            await utils.answer(message, now)
+                            llst = nw
+                        await message.delete()
+                    else:
+                        await utils.answer(message, "Вы указали не число!")
+            except:
+                await utils.answer(message, "Упс, ошибочка вышла!")
+                
+                
+                
+    @loader.group_admin_delete_messages
+    @loader.ratelimit
+    async def purgecmd(self, message):
+        """Purge from the replied message"""
+        if not message.is_reply:
+            await utils.answer(message, self.strings("from_where", message))
+            return
+
+        from_users = set()
+        args = utils.get_args(message)
+        for arg in args:
+            try:
+                entity = await message.client.get_entity(arg)
+                if isinstance(entity, telethon.tl.types.User):
+                    from_users.add(entity.id)
+            except ValueError:
+                pass
+
+        msgs = []
+        from_ids = set()
+        if await message.client.is_bot():
+            if not message.is_channel:
+                await utils.answer(message, self.strings("not_supergroup_bot", message))
+                return
+            for msg in range(message.reply_to_msg_id, message.id + 1):
+                msgs.append(msg)
+                if len(msgs) >= 99:
+                    logger.debug(msgs)
+                    await message.client.delete_messages(message.to_id, msgs)
+                    msgs.clear()
+        else:
+            async for msg in message.client.iter_messages(
+                entity=message.to_id, min_id=message.reply_to_msg_id - 1, reverse=True
+            ):
+                if from_users and msg.sender_id not in from_users:
+                    continue
+                msgs.append(msg.id)
+                from_ids.add(msg.sender_id)
+                if len(msgs) >= 99:
+                    logger.debug(msgs)
+                    await message.client.delete_messages(message.to_id, msgs)
+                    msgs.clear()
+        if msgs:
+            logger.debug(msgs)
+            await message.client.delete_messages(message.to_id, msgs)
+        await self.allmodules.log("purge", group=message.to_id, affected_uids=from_ids)
+
+    @loader.group_admin_delete_messages
+    @loader.ratelimit
+    async def delcmd(self, message):
+        """Delete the replied message"""
+        msgs = [message.id]
+        if not message.is_reply:
+            if await message.client.is_bot():
+                await utils.answer(message, self.strings("delete_what", message))
+                return
+            msg = await message.client.iter_messages(
+                message.to_id, 1, max_id=message.id
+            ).__anext__()
+        else:
+            msg = await message.get_reply_message()
+        msgs.append(msg.id)
+        logger.debug(msgs)
+        await message.client.delete_messages(message.to_id, msgs)
+        await self.allmodules.log(
+            "delete", group=message.to_id, affected_uids=[msg.sender_id]
+        )    
