@@ -30,7 +30,7 @@ class UserMod(loader.Module):
 
 
 	async def avacmd(self, message):
-		"""—> Получить все аватарки пользоаателя"""
+		"""—> Получить все аватарки пользователя"""
 		id = utils.get_args_raw(message)
 		user = await message.get_reply_message()
 		chat = message.input_chat
