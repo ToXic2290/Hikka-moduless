@@ -293,3 +293,4 @@ class LyricsMod(loader.Module):
             await message.delete() 
             await message.client.send_file(message.to_id, music[0].result.document, reply_to=reply.id if reply else None) 
         except: return await message.client.send_message(message.chat_id, f"<b>Музыка с названием <code>{args}</code> не найдена.</b>")
+        
