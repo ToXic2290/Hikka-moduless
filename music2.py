@@ -281,8 +281,8 @@ class LyricsMod(loader.Module):
             )
         return
         
-    async def smcmd(self, message): 
-        """Используй: .sm «название» чтобы найти музыку по названию.""" 
+    async def rmcmd(self, message): 
+        """Используй: .rm «название» чтобы найти музыку по названию.""" 
         args = utils.get_args_raw(message) 
         reply = await message.get_reply_message() 
         if not args: 
