@@ -140,7 +140,7 @@ class LyricsMod(loader.Module):
             logger.info(f"Can't react to {self.strings['author']}")
 
     async def lyricscmd(self, message: Message):
-        """Get lyrics"""
+        """Текст песенки"""
         text = utils.get_args_raw(message)
         reply = await message.get_reply_message()
         if not text:
@@ -215,71 +215,6 @@ class LyricsMod(loader.Module):
         ]
         await query.answer(res, cache_time=0)
 
-    async def slyricscmd(self, message: Message):
-        """Get lyrics from your current Spotify playback (Needs SpotifyNow module)"""
-        check = self.db.get("SpotifyNow", "acs_tkn", "404")
-        if check == "404":
-            await utils.answer(message, self.strings["noSpotify"])
-            return
-        elif check is None:
-            await utils.answer(message, self.strings["sauth"])
-            return
-        try:
-            sp = spotipy.Spotify(
-                auth=self.db.get("SpotifyNow", "acs_tkn")["access_token"]
-            )
-            current_playback = sp.current_playback()
-        except Exception:
-            await utils.answer(message, self.strings["SpotifyError"])
-            return
-        try:
-            track = current_playback["item"]["name"]
-        except Exception:
-            track = None
-        try:
-            artists = ", ".join([artist["name"] for artist in current_playback["item"]["artists"]])
-        except Exception:
-            artists = None
-        text = f"{artists} {track}"
-        if tracks := search(text):
-            track = tracks[0]
-        else:
-            await utils.answer(message, self.strings["noResults"].format(text))
-            return
-        await self.inline.form(
-            self.strings["lyrics"].format(
-                track["title"], track["artists"], get_lyrics(self, track["url"])
-            )[:4092] + "</i>",
-            reply_markup=[[{"text": self.strings["genius"], "url": track["url"]}]],
-            force_me=False,
-            message=message,
-        )
-
-    async def watcher(self, message: Message) -> None:
-        if (
-                getattr(message, "out", False)
-                and getattr(message, "via_bot_id", False)
-                and message.via_bot_id == self.bot_id
-                and (
-                "Loading lyrics for" in getattr(message, "raw_text", "")
-                or "Загрузка текста песни" in getattr(message, "raw_text", "")
-        )
-        ):
-            e = message.entities
-            track = {
-                "title": message.raw_text[e[0].offset:e[0].offset + e[0].length],
-                "artists": message.raw_text[e[1].offset:e[1].offset + e[1].length],
-                "url": message.raw_text.splitlines()[1]
-            }
-            await self.inline.form(
-                self.strings["lyrics"].format(
-                    track["title"], track["artists"], get_lyrics(self, track["url"])
-                )[:4092] + "</i>",
-                reply_markup=[[{"text": self.strings["genius"], "url": track["url"]}]],
-                force_me=False,
-                message=message,
-            )
-        return
         
     async def smcmd(self, message): 
         """Используй: .sm «название» чтобы найти музыку по названию.""" 
