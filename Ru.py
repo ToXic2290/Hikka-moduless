@@ -65,7 +65,7 @@ class MorzeMod(loader.Module):
 
             for letter in word.upper():
                 x += de[letter]
-            x += " "
+            x += ""
         await message.edit(x)
 
     @loader.unrestricted
@@ -121,5 +121,5 @@ class MorzeMod(loader.Module):
 
             for letter in word.split():
                 x += en[letter].lower()
-            x += " "
+            x += ""
         await message.edit(x)
