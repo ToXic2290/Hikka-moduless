@@ -117,7 +117,7 @@ class MorzeMod(loader.Module):
                 message, "<code>Вы не ввели текст или не сделали реплай.</code>"
             )
         x = ""
-        for word in text.split("  "):
+        for word in text.split(" "):
 
             for letter in word.split():
                 x += en[letter].lower()
