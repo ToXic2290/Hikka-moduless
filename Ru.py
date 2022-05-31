@@ -17,38 +17,38 @@ class MorzeMod(loader.Module):
     async def xxcmd(self, message):
         """.xx [реплай или текст]"""
         de = {
-            "А": "f",
-            "Б": ",",
-            "В": "d",
-            "Г": "u",
-            "Д": "l",
-            "Е": "t",
-            "Ж": ";",
-            "З": "p",
-            "И": "b",
-            "Й": "q",
-            "К": "r",
-            "Л": "k",
-            "М": "v",
-            "Н": "y",
-            "О": "j",
-            "П": "g",
-            "Р": "h",
-            "С": "c",
-            "Т": "n",
-            "У": "e",
-            "Ф": "a",
-            "Х": "[",
-            "Ц": "w",
-            "Ч": "x",
-            "Ш": "i",
-            "Щ": "o",
-            "Ъ": "]",
-            "Ы": "s",
-            "Ь": "m",
-            "Э": "'",
-            "Ю": ".",
-            "Я": "z",
+            "f": "а ",
+            ",": "б ",
+            "d": "в ",
+            "u": "г ",
+            "l": "д ",
+            "t": "е ",
+            ";": "ж ",
+            "p": "з ",
+            "b": "и ",
+            "q": "й ",
+            "r": "к ",
+            "k": "л ",
+            "v": "м ",
+            "y": "н ",
+            "j": "о ",
+            "g": "п ",
+            "h": "р ",
+            "c": "с ",
+            "n": "т ",
+            "e": "у ",
+            "a": "ф ",
+            "[": "х ",
+            "w": "ц ",
+            "x": "ч ",
+            "i": "ш ",
+            "o": "щ ",
+            "]": "ъ ",
+            "s": "ы ",
+            "m": "ь ",
+            "'": "э ",
+            ".": "ю ",
+            "z": "я ",
         }
 
         reply = await message.get_reply_message()
@@ -65,7 +65,7 @@ class MorzeMod(loader.Module):
 
             for letter in word.upper():
                 x += de[letter]
-            x += ""
+            x += " "
         await message.edit(x)
 
     @loader.unrestricted
@@ -117,9 +117,9 @@ class MorzeMod(loader.Module):
                 message, "<code>Вы не ввели текст или не сделали реплай.</code>"
             )
         x = ""
-        for word in text.split(" "):
+        for word in text.split("  "):
 
             for letter in word.split():
                 x += en[letter].lower()
-            x += ""
+            x += " "
         await message.edit(x)
