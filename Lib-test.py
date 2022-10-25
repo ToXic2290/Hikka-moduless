@@ -5,4 +5,4 @@ class AMLib(loader.Library):
   version = (0, 0, 1)
   
   
-  async def list(['пизда', 'хуй',])
+  mats = ['пизда', 'хуй']
