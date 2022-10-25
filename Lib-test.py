@@ -1,6 +1,6 @@
 from .. import loader
 
-class AMLib(loader.Library):
+class AntiMatLibrary(loader.Library):
   developer = "@ToXicUse"
   version = (0, 0, 1)
   
