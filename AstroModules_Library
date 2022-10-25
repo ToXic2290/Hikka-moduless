@@ -1,6 +1,6 @@
 from .. import loader
 
-class AM_Lib(loader.Library):
+class txAM_Lib(loader.Library):
   developer = "@ToXicUse"
   version = (0, 0, 2)
   
