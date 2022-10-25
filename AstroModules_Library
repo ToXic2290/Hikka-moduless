@@ -1,0 +1,8 @@
+from .. import loader
+
+class AM_Library(loader.Library):
+  developer = "@ToXicUse"
+  version = (0, 0, 2)
+  
+  mats = ['пизда', 'хуй', 'блять', 'пиздец', 'сука', 'еблан', 'долбоеб']
+  
