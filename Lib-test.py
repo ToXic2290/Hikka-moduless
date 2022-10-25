@@ -6,4 +6,3 @@ class AMLib(loader.Library):
   
   
   mats = ['пизда', 'хуй']
-  beta = ["1484386024", "742333517"]
