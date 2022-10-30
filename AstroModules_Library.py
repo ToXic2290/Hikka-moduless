@@ -26,6 +26,29 @@ class txAM_Lib(loader.Library):
 
         return response
 
+  async def message_g(
+    self,
+    text: str,
+    user_id: int,
+    mark_read: bool = False,
+    delete: bool = False,
+  ):
+    """Отправляет сообщение и возращает ответ"""
+    async with self.client.conversation(user_id) as conv:
+        msg = await conv.send_message(text)
+        response1 = await conv.get_response()
+        response2 = await conv.get_response()
+        if mark_read:
+            await conv.mark_read()
+
+        if delete:
+            await msg.delete()
+            await response1.delete()
+            await response2.delete()
+
+        return response2
+
+
   # AntiMat
   matlist = ['пизда', 'хуй', 'блять', 'пиздец', 'сука', 'еблан', 'долбоеб']
   
