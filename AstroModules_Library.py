@@ -26,6 +26,7 @@ class txAM_Lib(loader.Library):
 
         return response
 
+
   async def message_g(
     self,
     text: str,
