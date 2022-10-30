@@ -4,6 +4,28 @@ class txAM_Lib(loader.Library):
   developer = "@ToXicUse"
   version = (0, 0, 2)
 
+
+
+  async def message_q(
+    self,
+    text: str,
+    user_id: int,
+    mark_read: bool = False,
+    delete: bool = False,
+  ):
+    """Отправляет сообщение и возращает ответ"""
+    async with self.client.conversation(user_id) as conv:
+        msg = await conv.send_message(text)
+        response = await conv.get_response()
+        if mark_read:
+            await conv.mark_read()
+
+        if delete:
+            await msg.delete()
+            await response.delete()
+
+        return response
+
   # AntiMat
   matlist = ['пизда', 'хуй', 'блять', 'пиздец', 'сука', 'еблан', 'долбоеб']
   
