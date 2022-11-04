@@ -49,7 +49,7 @@ class txAM_Lib(loader.Library):
         return response2
 
   async def nazad(self, call: InlineCall):
-    bot = self.confg['bot_username']
+    bot = self.config['bot_username']
     await self.client.send_message(f'{bot}', '/key__prev')
 
   async def pausa(self, call: InlineCall):
