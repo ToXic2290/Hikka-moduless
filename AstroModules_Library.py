@@ -1,4 +1,5 @@
 from .. import loader
+from ..inline.types import InlineCall
 
 class txAM_Lib(loader.Library):
   developer = "@ToXicUse"
