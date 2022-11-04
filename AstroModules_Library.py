@@ -49,7 +49,8 @@ class txAM_Lib(loader.Library):
         return response2
 
   async def nazad(self, call: InlineCall):
-    await self.client.send_message(f'{self.bot}', '/key__prev')
+    bot = self.confg['bot_username']
+    await self.client.send_message(f'{bot}', '/key__prev')
 
   async def pausa(self, call: InlineCall):
     await self.client.send_message(f'{self.bot}', '/key__play')
