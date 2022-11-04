@@ -5,6 +5,7 @@ class txAM_Lib(loader.Library):
   version = (0, 0, 2)
 
 
+# --------------------------------------------------------------------------------#
   # Pc-Manager
   async def message_q(
     self,
@@ -26,7 +27,6 @@ class txAM_Lib(loader.Library):
 
         return response
 
-
   async def message_g(
     self,
     text: str,
@@ -41,21 +41,64 @@ class txAM_Lib(loader.Library):
         response2 = await conv.get_response()
         if mark_read:
             await conv.mark_read()
-
         if delete:
             await msg.delete()
             await response1.delete()
             await response2.delete()
-
         return response2
 
+  async def nazad(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/key__prev')
 
+  async def pausa(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/key__play')
+
+  async def vpered(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/key__next')
+
+  async def vol10(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 10')
+
+  async def vol20(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 20')
+
+  async def vol30(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 30')
+
+  async def vol40(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 40')
+
+  async def vol50(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 50')
+
+  async def vol60(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 60')
+
+  async def vol70(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 70')
+
+  async def vol80(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 80')
+
+  async def vol90(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 90')
+
+  async def vol100(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume 100')
+
+  async def volUp(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume up')
+
+  async def volDown(self, call: InlineCall):
+    await self.client.send_message(f'{self.bot}', '/volume down')
+
+
+# --------------------------------------------------------------------------------#
   # AntiMat
   matlist = ['пизда', 'хуй', 'блять', 'пиздец', 'сука', 'еблан', 'долбоеб']
   
 
-
-
+# --------------------------------------------------------------------------------#
   # Words
   a = ['Аршин', 'Абзац', 'Авантюризм', 'Азот', 'Аминь', 'Автоматизм', 'Абонемент', 'Аврал', 'Аборт', 'Анонс', 'Арбуз', 'Аккорд', 'Афронт', 'Аффект', 'Апартамент', 'Ампир', 'Амбар', 'Ангажемент', 'Аэростат', 'Арбуз', 'Арфист', 'Аквамарин', 'Ажур', 'Артист']
   b = ['Ба', 'бант', 'банк', 'баба', 'банан', 'бак', 'басня', 'башня', 'банка', 'батон', 'баян', 'балкон', 'баран', 'барабан', 'багаж', 'баранка', 'бабочка', 'балка', 'багор', 'багет', 'бабушка', 'балет', 'боязнь', 'борьба', 'борода', 'бобёр', 'бамбук', 'багульник', 'бадья', 'база', 'базар', 'байка', 'бакен', 'баклан', 'баклажан', 'бактерия', 'бал', 'балаган', 'баллада', 'баловать', 'бальзам', 'банда', 'бандит', 'банкет', 'банкир', 'баня', 'барак', 'баранка', 'баранина', 'барашек', 'баржа', 'барин', 'барс', 'бархат', 'барыня', 'бас', 'батут', 'батюшка', 'батарейка', 'башмак']
