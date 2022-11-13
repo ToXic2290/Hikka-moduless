@@ -62,7 +62,7 @@ class txAM_Lib(loader.Library):
         msg = await conv.send_message(text)
         response1 = await conv.get_response()
         response2 = await conv.get_response()
-        time.sleep(3)
+        time.sleep(5)
         response3 = await conv.get_response()
         if mark_read:
             await conv.mark_read()
