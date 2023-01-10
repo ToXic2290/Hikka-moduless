@@ -4,7 +4,7 @@ import random
 
 class jarvis_Lib(loader.Library):
   developer = "@ToXicUse"
-  version = (0, 0, 1)
+  version = (0, 0, 5)
 
   jokes = [
   """
