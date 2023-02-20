@@ -9,7 +9,7 @@ class jarvis_Lib(loader.Library):
   jokes = ['Jarvis closed']
 
   names = ['Jarvis closed']
-  ai = "just_zhenya_bot"
+  ai = "da"
   saver = 'ttsavebot'
   music_bot = 'lybot'
   otklik = ['Jarvis closed']
