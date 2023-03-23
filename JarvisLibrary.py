@@ -18,7 +18,7 @@ JarvisMod Успешно установлен на этот аккаунт.
 
 Все остальные команды вы можете просмотреть написав <code>Джарвис помощь</code> в чате, в котором Джарвис работает.
 
-@AstroModules | @AstroOfftop | @ToXicUse
+@AstroModules | @AstroOfftop | @ToXicUse | @XizurK
 ''')
 
   jokes = [
