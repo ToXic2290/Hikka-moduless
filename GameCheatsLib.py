@@ -74,7 +74,7 @@ class GameCheat_Lib(loader.Library):
     result_data = resp.json()
     return result_data["result"]["game"]["id"]
 
-  async def send_score(score, timePlay, checksum, token, game_url, game_id):
+  async def send_score(self, score, timePlay, checksum, token, game_url, game_id):
     headers = CaseInsensitiveDict()
     headers["Host"] = "api.service.gameeapp.com"
     headers[
