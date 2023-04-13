@@ -30,10 +30,10 @@ class GameCheat_Lib(loader.Library):
     headers["Accept-Encoding"] = "gzip, deflate, br"
     headers["Accept-Language"] = "en-US,en;q=0.9"
     data = (
-      '{"jsonrpc": "2.0", "id": "user.authentication.botLogin", '
-      '"method": "user.authentication.botLogin", "params": '
-      '{"botName": "telegram", "botGameUrl": "{}", "botUserIdentifier": null}}'
-    ).format(g)
+        '{"jsonrpc":"2.0","id":"user.authentication.botLogin","method":"user.authentication.botLogin","params":{"botName":"telegram","botGameUrl":"'
+        + g
+        + '","botUserIdentifier":null}}'
+    )
 
     resp = requests.post(
       'http://api.service.gameeapp.com', 
@@ -65,10 +65,10 @@ class GameCheat_Lib(loader.Library):
       "User-Agent"
     ] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
     data = (
-      '{"jsonrpc": "2.0", "id": "game.getWebGameplayDetails", '
-      '"method": "game.getWebGameplayDetails", "params": '
-      '{"gameUrl": "{}"}}'
-    ).format(game_url)
+        '{"jsonrpc":"2.0","id":"game.getWebGameplayDetails","method":"game.getWebGameplayDetails","params":{"gameUrl":"'
+        + game_url
+        + '"}}'
+    )
 
     resp = requests.post('https://api.service.gameeapp.com/', headers=headers, data=data)
     result_data = resp.json()
