@@ -4,6 +4,7 @@ import re
 import random
 import hashlib
 import requests
+import logging
 from requests.structures import CaseInsensitiveDict
 
 class GameCheat_Lib(loader.Library):
@@ -111,6 +112,8 @@ class GameCheat_Lib(loader.Library):
     if resp.status_code == 200:
       for i in list(resp.json()):
         if i == "error":
+          my_json = resp.json()
+          logging.error(my_json['user']['cheater']['banStatus'])
           return('ban')
 
     else:
