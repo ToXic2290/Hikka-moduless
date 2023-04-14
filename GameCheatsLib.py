@@ -113,7 +113,7 @@ class GameCheat_Lib(loader.Library):
       for i in list(resp.json()):
         if i == "error":
           my_json = resp.json()
-          logging.error(my_json['user']['cheater']['banStatus'])
+          logging.error(f"You are banned in @gamee on {my_json['user']['cheater']['banStatus']}")
           return('ban')
 
     else:
