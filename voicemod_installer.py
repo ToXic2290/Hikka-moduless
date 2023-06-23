@@ -92,6 +92,8 @@ class VoiceModInstall(loader.Module):
 
         command = 'pip install pytgcalls --no-deps'
         os.system(command)
+        os.system('pip install numpy')
+        os.system('pip install pydub')
 
         c = await utils.answer(b, self.strings('installing_ffmpeg'))
         command = 'pip install ffmpeg-python'
