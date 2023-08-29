@@ -115,7 +115,7 @@ class GameCheat_Lib(loader.Library):
           my_json = resp.json()
           logging.error(f"You are banned in @gamee on {my_json['user']['cheater']['banStatus']}")
           if my_json['user']['cheater']['banStatus'] == "permanent":
-            return('ban_premanent')
+            return('ban_permanent')
           return('ban')
 
     else:
