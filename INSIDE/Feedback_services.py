@@ -759,6 +759,7 @@ class Inside_Lib(loader.Library):
 	    return f'{choice(templates)}@gmail.com'
 	
 	def urls(self, number):
+	    user_agent = self.user_agent
 	    return [
 		{
 		    'info': {'country': 'ALL', 'attack': 'SMS', 'website': 'My.Telegram.org', 'anonymous': 'No'},
