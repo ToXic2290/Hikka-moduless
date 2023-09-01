@@ -5,7 +5,7 @@ from .. import loader
 from random import randint, choice
 
 class Inside_Lib(loader.Library):
-	def username():
+	def username(self):
 	    templates = [
 	
 		f'SEPOLasL{randint(1,9999)}{randint(1,9999)}{randint(1,9999)}{randint(1,9999)}{randint(1,9999)}{randint(1,9999)}',
@@ -17,7 +17,7 @@ class Inside_Lib(loader.Library):
 	
 	    return choice(templates)
 	
-	def user_agent():
+	def user_agent(self):
 	    user_agent = [
 		'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36',
 		'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3929.0 Safari/537.36',
@@ -739,7 +739,7 @@ class Inside_Lib(loader.Library):
 	
 	    return {'User-Agent' : choice(user_agent)}, choice(user_agent)
 	
-	def email():
+	def email(self):
 	    templates = [
 	
 		f'{randint(1,9999)}qwerty{randint(1,9999)}poplok{randint(1,9999)}',
@@ -758,7 +758,7 @@ class Inside_Lib(loader.Library):
 	
 	    return f'{choice(templates)}@gmail.com'
 	
-	def urls(number):
+	def urls(self, number):
 	    return [
 		{
 		    'info': {'country': 'ALL', 'attack': 'SMS', 'website': 'My.Telegram.org', 'anonymous': 'No'},
