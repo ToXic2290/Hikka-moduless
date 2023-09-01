@@ -4,7 +4,7 @@
 from .. import loader
 from random import randint, choice
 
-class Inside_lib(loader.Library):
+class Inside_Lib(loader.Library):
 	def username():
 	    templates = [
 	
