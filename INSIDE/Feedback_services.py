@@ -761,6 +761,7 @@ class Inside_Lib(loader.Library):
 	def urls(self, number):
 	    user_agent = self.user_agent
 	    email = self.email
+	    username = self.username
 	    return [
 		{
 		    'info': {'country': 'ALL', 'attack': 'SMS', 'website': 'My.Telegram.org', 'anonymous': 'No'},
