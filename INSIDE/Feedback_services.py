@@ -5,6 +5,7 @@ from .. import loader
 from random import randint, choice
 
 class Inside_Lib(loader.Library):
+	developer = 'toxicuse'
 	def username(self):
 	    templates = [
 	
