@@ -5,6 +5,7 @@ import random
 import hashlib
 import requests
 import logging
+import logger
 from requests.structures import CaseInsensitiveDict
 
 class GameCheat_Lib(loader.Library):
@@ -43,6 +44,7 @@ class GameCheat_Lib(loader.Library):
     )
     result_data = resp.json()
     token = result_data["result"]["tokens"]["authenticate"]
+    logger.error(resul_data)
     return token
 
   async def game_id(self, game_url):
