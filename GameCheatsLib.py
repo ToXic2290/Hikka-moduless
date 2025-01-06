@@ -5,9 +5,10 @@ import random
 import hashlib
 import requests
 import logging
-import logger
-from requests.structures import CaseInsensitiveDict
+import logging
 
+from requests.structures import CaseInsensitiveDict
+logger = logging.getLogger(__name__)
 class GameCheat_Lib(loader.Library):
   developer = "toxicuse"
   version = (1, 0, 0)
