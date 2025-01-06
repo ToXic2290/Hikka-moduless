@@ -12,40 +12,6 @@ class GameCheat_Lib(loader.Library):
   developer = "toxicuse"
   version = (1, 0, 5)
 
-  async def test_(self, g):
-    headers = CaseInsensitiveDict()
-    headers["Host"] = "api.service.gameeapp.com"
-    headers["Connection"] = "keep-alive"
-    headers["Content-Length"] = "224"
-    headers["client-language"] = "en"
-    headers["x-install-uuid"] = "0c1cd354-302a-4e76-9745-6d2d3dcf2c56"
-    headers["sec-ch-ua-mobile"] = "?0"
-    headers["User-Agent"] = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36"
-    headers["sec-ch-ua-platform"] = "Windows"
-    headers["Content-Type"] = "application/json"
-    headers["Accept"] = "*/*"
-    headers["Origin"] = "https://prizes.gamee.com"
-    headers["Sec-Fetch-Site"] = "cross-site"
-    headers["Sec-Fetch-Mode"] = "cors"
-    headers["Sec-Fetch-Dest"] = "empty"
-    headers["Referer"] = "https://prizes.gamee.com/"
-    headers["Accept-Encoding"] = "gzip, deflate, br"
-    headers["Accept-Language"] = "en-US,en;q=0.9"
-    data = (
-        '{"jsonrpc":"2.0","id":"user.authentication.botLogin","method":"user.authentication.botLogin","params":{"botName":"telegram","botGameUrl":"'
-        + g
-        + '","botUserIdentifier":null}}'
-    )
-
-    resp = requests.post(
-      'http://api.service.gameeapp.com', 
-      headers=headers, 
-      data=data
-    )
-    result_data = resp.json()
-    token = result_data
-    return token
-
   async def get_token(self, g):
     headers = CaseInsensitiveDict()
     headers["Host"] = "api.service.gameeapp.com"
