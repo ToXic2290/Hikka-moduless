@@ -13,7 +13,7 @@ class GameCheat_Lib(loader.Library):
   developer = "toxicuse"
   version = (1, 0, 0)
 
-  async def test_(self, url):
+  async def test_(self, g):
     headers = CaseInsensitiveDict()
     headers["Host"] = "api.service.gameeapp.com"
     headers["Connection"] = "keep-alive"
