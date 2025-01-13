@@ -6,7 +6,7 @@ import json
 import aiohttp
 import asyncio
 
-class GameCheat_Lib(loader.Library):
+class astroYM_lib(loader.Library):
   developer = "AstroModules"
   version = (1, 0, 0)
 
