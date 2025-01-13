@@ -11,7 +11,7 @@ class GameCheat_Lib(loader.Library):
   version = (1, 0, 0)
 
   async def get_current_track(self, client, token):
-  	device_info = {"app_name": "Chrome", "type": 1}
+    device_info = {"app_name": "Chrome", "type": 1}
     ws_proto = {
         "Ynison-Device-Id": "".join([random.choice(string.ascii_lowercase) for _ in range(16)]),
         "Ynison-Device-Info": json.dumps(device_info),
