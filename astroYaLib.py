@@ -6,7 +6,7 @@ import json
 import aiohttp
 import asyncio
 
-class astroYM_lib(loader.Library):
+class astroYM_Lib(loader.Library):
   developer = "AstroModules"
   version = (1, 0, 0)
 
