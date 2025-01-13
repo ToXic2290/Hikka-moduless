@@ -17,8 +17,8 @@ class GameCheat_Lib(loader.Library):
         "Ynison-Device-Info": json.dumps(device_info),
     }
     timeout = aiohttp.ClientTimeout(total=15, connect=10)
-   	
-   	try:
+
+    try:
         async with aiohttp.ClientSession(timeout=timeout) as session:
             async with session.ws_connect(
                 url="wss://ynison.music.yandex.ru/redirector.YnisonRedirectService/GetRedirectToYnison",
